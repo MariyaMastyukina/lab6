@@ -26,6 +26,5 @@ public class SaveCommand implements Command{
     public void execute(String option, Scanner scanner,String type) throws IOException {
         System.out.println("Выполняется сохранение коллекции в файл");
         coll.saveCollection();
-        System.out.println("Коллекция сохранена в файл");
     }
 }

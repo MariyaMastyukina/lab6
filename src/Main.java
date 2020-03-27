@@ -10,17 +10,14 @@ public class Main {
         if(filename.length()!=1) {
             try {
                 File file = new File(filename);
-                if (!file.canRead()) {
-                    file.setReadable(true);
+                if (file.canRead()) {
+
+                    Launch pusk = new Launch(file);
+                    pusk.beginProgramm();
                 }
-                if (!file.canWrite()) {
-                    file.setWritable(true);
+                else {
+                    System.out.println("Чтение файла невозможно. Поменяйте права");
                 }
-                if (!file.canExecute()) {
-                    file.setExecutable(true);
-                }
-                Launch pusk = new Launch(file);
-                pusk.beginProgramm();
             } catch (FileNotFoundException e) {
                 System.out.println("Такого файла не существует");
             }

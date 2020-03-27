@@ -40,16 +40,8 @@ public class ExecuteScriptCommand implements Command {
     @Override
     public void execute(String filename, Scanner scanner,String type) throws FileNotFoundException {
         File file = new File (filename);
-        FileReader fileread = new FileReader(file);
-        if(!file.canRead()){
-            file.setReadable(true);
-        }
-        if(!file.canWrite()){
-            file.setWritable(true);
-        }
-        if(!file.canExecute()){
-            file.setExecutable(true);
-        }
+        if(file.canRead()){
+            FileReader fileread = new FileReader(file);
         Scanner scanfile = new Scanner(fileread);
         filelist.add(filename);
         Boolean checker;
@@ -72,21 +64,22 @@ public class ExecuteScriptCommand implements Command {
                                 }
                                 if (checker) {
                                     filelist.add(lineParts[1]);
-                                    pusk.executeCommand(lineParts[0], lineParts[1], scanfile,"file");
+                                    pusk.executeCommand(lineParts[0], lineParts[1], scanfile, "file");
                                 } else {
                                     System.out.println("Зацикливание execute_script. Дальнейшее выполнение команды невозможно");
                                     break;
                                 }
                             } else {
-                                pusk.executeCommand(lineParts[0], lineParts[1], scanfile,"file");
+                                pusk.executeCommand(lineParts[0], lineParts[1], scanfile, "file");
                             }
                         } else {
-                            pusk.executeCommand(currentCommand, null, scanfile,"file");
+                            pusk.executeCommand(currentCommand, null, scanfile, "file");
                         }
                     }
                 } else {
                     System.out.println("Пустая строка");
                 }
+
             } catch (NoSuchElementException e) {
                 System.out.println("Данные для элемента коллекции введены неверно. Выполнение команды невозможно");
                 break;
@@ -101,6 +94,8 @@ public class ExecuteScriptCommand implements Command {
                 System.out.println("Элемента с таким id нет. Добавьте элементы в коллекцию с помощью команды \"add\"");
             }
         }
+        }
+        else {System.out.println("Чтение из файловов невозможно. Измените права. ");}
     }
 }
 

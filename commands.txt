@@ -1,4 +1,4 @@
-update 5
+update 267
 fuerfhr
 f
 90
@@ -9,4 +9,5 @@ true
 subarctic
 oligarchy
 gyiiy
-execute_script Test
+save
+execute_script commands.txt

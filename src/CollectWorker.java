@@ -79,17 +79,14 @@ public class CollectWorker{
      * @throws  IOException if <code>filereader</code> does not exist
      */
     public void fromFileToColl() throws IOException {
-        try{
-            Gson gson=new Gson();
-            if(!file.canRead()){
-                file.setReadable(true);
-            }
-            FileReader filereader=new FileReader(file);
-            Scanner scanFile=new Scanner(filereader) ;
-            while(scanFile.hasNextLine()){
-                collection.add(gson.fromJson(scanFile.nextLine(),City.class));
-        }
-            filereader.close();
+        try {
+            Gson gson = new Gson();
+                FileReader filereader = new FileReader(file);
+                Scanner scanFile = new Scanner(filereader);
+                while (scanFile.hasNextLine()) {
+                    collection.add(gson.fromJson(scanFile.nextLine(), City.class));
+                }
+                filereader.close();
         }
         catch(IOException e){
             System.out.println("Файл не существует, заполнение коллекции невозможно, поэтому коллекция пуста");
@@ -101,15 +98,19 @@ public class CollectWorker{
      */
     public void saveCollection() throws IOException {
         Gson gson=new Gson();
-        if(!file.canWrite()){
-            file.setWritable(true);
+        if(file.canWrite()) {
+
+            FileOutputStream filewriter = new FileOutputStream(file);
+            for (City city : collection) {
+                filewriter.write(gson.toJson(city).getBytes());
+                filewriter.write("\n".getBytes());
+            }
+            System.out.println("Коллекция сохранена в файл");
+            filewriter.close();
         }
-        FileOutputStream filewriter=new FileOutputStream(file);
-        for (City city:collection) {
-            filewriter.write(gson.toJson(city).getBytes());
-            filewriter.write("\n".getBytes());
+        else{
+            System.out.println("Запись файла невозможна. Поменяйте права доступа");
         }
-        filewriter.close();
     }
     /**
      * Функция получения определенного элемента
