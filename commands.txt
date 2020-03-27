@@ -1,0 +1,12 @@
+update 5
+fuerfhr
+f
+90
+90
+90
+-90
+true
+subarctic
+oligarchy
+gyiiy
+execute_script Test
