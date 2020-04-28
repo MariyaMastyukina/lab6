@@ -3,18 +3,37 @@ package Client;
 import Server.Collection.Government;
 import Server.Collection.*;
 import Server.IOInterface;
+import Server.MapFromServer;
+
 import java.io.Serializable;
 import java.util.*;
 
 public class CommandObject implements Serializable {
     private String nameCommand;
     private String option;
+    private Boolean checker;
     private List<String> args = new ArrayList<>();
 
-    public CommandObject(String nameCommand, String option) {
-        this.nameCommand = nameCommand;
-        this.option = option;
-        if (nameCommand.equals("add")||nameCommand.equals("update_by_id")) setListArgs();
+    public CommandObject(String line, MapFromServer map) {
+        if (!line.trim().equals("")) {
+            if (line.contains(" ")) {
+                String[] lineParts = line.split(" ", 2);
+                Validation validator = new Validation(lineParts[0], lineParts[1], map);
+                checker = validator.isValidation();
+                if (checker) {
+                    nameCommand = lineParts[0];
+                    option = lineParts[1];
+                }
+            } else {
+                Validation validator = new Validation(line, null, map);
+                checker = validator.isValidation();
+                if (checker) {
+                    nameCommand = line;
+                    option = null;
+                }
+            }
+            if (nameCommand.equals("add") || nameCommand.equals("update_by_id")) setListArgs();
+        }
     }
     private transient Scanner scanner = new Scanner(System.in);
 
@@ -176,5 +195,8 @@ public class CommandObject implements Serializable {
 
     public String getOption() {
         return option;
+    }
+    public Boolean getChecker(){
+        return checker;
     }
 }

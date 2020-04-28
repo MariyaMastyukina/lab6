@@ -12,7 +12,7 @@ import Client.*;
  * @author Мастюкина Мария
  * Класс, работающий в качестве сервера
  */
-public class Server implements Serializable {
+public class Server {
     private static boolean checker;
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         ClientConnection clientConnection = null;
