@@ -11,7 +11,7 @@ import java.util.*;
 public class CommandObject implements Serializable {
     private String nameCommand;
     private String option;
-    private Boolean checker;
+    private Boolean checker=false;
     private List<String> args = new ArrayList<>();
 
     public CommandObject(String line, MapFromServer map) {
@@ -32,8 +32,9 @@ public class CommandObject implements Serializable {
                     option = null;
                 }
             }
-            if (nameCommand.equals("add") || nameCommand.equals("update_by_id")) setListArgs();
         }
+        if (nameCommand!=null){
+        if (nameCommand.equals("add") || nameCommand.equals("update_by_id")) setListArgs();}
     }
     private transient Scanner scanner = new Scanner(System.in);
 
