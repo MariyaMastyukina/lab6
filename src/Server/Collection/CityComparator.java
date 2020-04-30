@@ -13,5 +13,5 @@ public class CityComparator implements Comparator<City> {
     @Override
     public int compare(City city1, City city2) {
         return city1.getPopulation().compareTo(city2.getPopulation());
-    }
-}
+        }
+        }

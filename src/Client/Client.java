@@ -13,9 +13,8 @@ public class Client {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         IOInterface ioClient = new IOTerminal(System.in, System.out);
-        ServerConnection serverConnection = null;
         Validation validator;
-        serverConnection = new ServerConnection();
+        ServerConnection serverConnection = new ServerConnection();
         if (args.length == 2) {
             serverConnection.connection(args[0], args[1]);
             ioClient.writeln("Здравстуйте! Введите \"help\", чтобы увидеть список доступных команд");
@@ -36,7 +35,6 @@ public class Client {
         }
         IOInterface ioServer = new IOTerminal(serverConnection.getInputStream(), serverConnection.getOutputStream());
         while (!ioServer.ready()) {
-
         }
         MapFromServer map = (MapFromServer) ioServer.readObj();
         ioClient.writeln("Введите команду");
@@ -45,8 +43,15 @@ public class Client {
         while(true) {
             command=new CommandObject(line,map);
                 if (command.getChecker()) {
-                    TransferObject transferObject = new TransferObject(ioServer);
-                    transferObject.transfer(command,ioClient);
+                    ioServer.writeObj(command);
+                    while (!ioServer.ready()){
+
+                    }
+                    while (ioServer.ready()){
+                        ioClient.writeln(ioServer.readLine());
+                    }
+//                    TransferObject transferObject = new TransferObject(ioServer);
+//                    transferObject.transfer(command,ioClient);
                 }
                 ioClient.writeln("Введите команду");
                 line=ioClient.readLine();

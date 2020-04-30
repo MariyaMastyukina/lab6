@@ -98,4 +98,7 @@ public class City implements Serializable {
     public Integer getPopulation(){
         return population;
     }
+    public String getNameCity(){
+        return name;
+    }
 }

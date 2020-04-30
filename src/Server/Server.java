@@ -20,13 +20,13 @@ public class Server {
         CommandObject currentCommand = null;
         IOInterface ioClient = null;
         try{
-            clientConnection=new ClientConnection(Integer.parseInt(args[0]));
+            clientConnection=new ClientConnection(4040);
         }
         catch(IndexOutOfBoundsException e){
             System.out.println("Нужно указать порт");
             System.exit(0);
         }
-        catch (NumberFormatException | IOException e){
+        catch (NumberFormatException e){
             System.out.println("Формат порта не верен");
             System.exit(0);
         }
@@ -36,6 +36,7 @@ public class Server {
             Iterator iterator= clientConnection.getSelector().selectedKeys().iterator();
             while(iterator.hasNext()){
                 SelectionKey selectionKey=(SelectionKey) iterator.next();
+                System.out.println("текущий селектор" +selectionKey);
                 iterator.remove();
                 try{
                     if (!selectionKey.isValid()){
@@ -43,26 +44,28 @@ public class Server {
                     }
                     if (selectionKey.isAcceptable()){
                         clientConnection.acceptConnection();
+                        System.out.println("подключение завершено");
                         checker=false;
                     }
                     if (selectionKey.isWritable()){
                         if (!checker){
+                            System.out.println("создан ioClient для map");
                             ioClient=new IOClient((SocketChannel) selectionKey.channel());
+                            System.out.println("map отправлен клиенту");
                             ioClient.writeObj(map);
                             checker=true;
                         }
                         else{
-                            System.out.println("byb");
                             launch.beginProgramm(currentCommand,ioClient);
                         }
                         selectionKey.interestOps(SelectionKey.OP_READ);
                     }
                     if (selectionKey.isReadable()){
-                        System.out.println("byb");
+                        System.out.println("Начинаем считывать команду");
                         ioClient= new IOClient((SocketChannel) selectionKey.channel());
-                        System.out.println("byb");
+                        System.out.println("Создан ioClient");
                         currentCommand=(CommandObject) ioClient.readObj();
-                        System.out.println("byb");
+                        System.out.println("Получена команда "+currentCommand.getNameCommand());
                         selectionKey.interestOps(SelectionKey.OP_WRITE);
                     }
                 }

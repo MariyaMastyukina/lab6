@@ -160,5 +160,8 @@ public class CollectWorker {
     public void sortRise() {
         Collections.sort(collection, new CityComparator());
     }//for print_ascending,sort
+    public void sortByName(){
+        Collections.sort(collection,new NameComparator());
+    }
 
 }

@@ -16,18 +16,20 @@ public class TransferObject implements Serializable {
 
     }
     public void transfer(CommandObject currentCommand, IOInterface ioClient) throws IOException {
-        System.out.println("byb");
         ioServer.writeObj(currentCommand);
         long timeStart =System.currentTimeMillis();
-        while (!ioServer.ready()){
-            long timeEnd=System.currentTimeMillis();
-            if (timeEnd-timeStart>10000){
-                ioClient.writeln("Сервер недоступен. Введите через пробел имя хоста и порт заново");
-                String line=ioClient.readLine();
-                String [] words=line.split(" ",2);
-                ServerConnection serverConnection=new ServerConnection();
-                serverConnection.connection(words[0],words[1]);
-            }
+//        while (!ioServer.ready()){
+////            long timeEnd=System.currentTimeMillis();
+////            if (timeEnd-timeStart>10000){
+////                ioClient.writeln("Сервер недоступен. Введите через пробел имя хоста и порт заново");
+////                String line=ioClient.readLine();
+////                String [] words=line.split(" ",2);
+////                ServerConnection serverConnection=new ServerConnection();
+////                serverConnection.connection(words[0],words[1]);
+////            }
+//        }
+        while(!ioServer.ready()){
+
         }
         while (ioServer.ready()){
             ioClient.writeln(ioServer.readLine());

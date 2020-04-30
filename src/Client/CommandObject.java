@@ -34,7 +34,11 @@ public class CommandObject implements Serializable {
             }
         }
         if (nameCommand!=null){
-        if (nameCommand.equals("add") || nameCommand.equals("update_by_id")) setListArgs();}
+                if (nameCommand.equals("add") || nameCommand.equals("update")) {
+                    setListArgs();
+                }
+        }
+
     }
     private transient Scanner scanner = new Scanner(System.in);
 

@@ -41,11 +41,13 @@ public class IOTerminal implements IOInterface {
 
     @Override
     public void writeObj(Object obj) throws IOException {
-
+        ByteArrayOutputStream baos=new ByteArrayOutputStream();
         //записываем сериализованный объект в буфер байтов, отправляем
-        ByteArrayOutputStream  buffer=new ByteArrayOutputStream();
-        ObjectOutputStream oos=new ObjectOutputStream(buffer);
+        ObjectOutputStream oos=new ObjectOutputStream(baos);
         oos.writeObject(obj);
+        BufferedOutputStream bos=new BufferedOutputStream(out);
+        bos.write(baos.toByteArray(),0,baos.toByteArray().length);
+        bos.flush();
         oos.flush();
     }
 

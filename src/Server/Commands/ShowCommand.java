@@ -31,6 +31,7 @@ public class ShowCommand implements Command {
             if (coll.getSizeColl()==0){
                 io.writeln("Команда show не выполнена. Коллекция пустая");}
                         else{
+                            coll.sortByName();
                 io.writeln("Команда show выполнена. Список элементов коллекции:\n"+coll.getAllElement());
             }
     }

@@ -28,6 +28,7 @@ public class ClientConnection {
         channel.configureBlocking(false);
         channel.register(selector,SelectionKey.OP_WRITE);
     }
+
     public SocketChannel getChannel(){
         return channel;
     }

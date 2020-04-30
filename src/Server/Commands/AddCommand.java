@@ -205,7 +205,7 @@ public class AddCommand implements Command {
             args.add(nameGovernor);
             coll.addElement(new City(args));
             }
-        io.writeln("Команда add выполнена. Элемент добавлен в коллекцию");
+        io.writeln("Команда add выполнена. Элемент добавлен в коллекцию, введите команду \"show\", чтобы увидеть содержимое коллекции");
 
     }
 }

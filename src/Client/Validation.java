@@ -36,12 +36,21 @@ public class Validation {
             System.out.println("Такой команды не существует или она записана некорректно. Введите \"help\", чтобы получить список действующих команд");
             return checker;
         }
-        if (option!=null && !command.equals("execute_script")){
+        if (command.equals("remove_by_id") || command.equals("update")){
             try{
                 Long.parseLong(option);
             }
             catch(NumberFormatException e){
-                System.out.println("Выполнение команды невозможно. Введите корректный id, metersAboveSeaLevel");
+                System.out.println("Выполнение команды невозможно. Введен некорректный id, повторите ввод команды");
+                checker=false;
+            }
+        }
+        if (command.equals("remove_all_by_meters_above_sea_level")){
+            try {
+                Integer.parseInt(option);
+            }
+            catch(NumberFormatException e){
+                System.out.println("Выполнение команды невозможно. Введен некорректный meters_above_sea_level, повторите ввод команды");
                 checker=false;
             }
         }

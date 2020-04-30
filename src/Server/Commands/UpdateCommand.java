@@ -34,7 +34,7 @@ public class UpdateCommand implements Command {
             coll.removeElement(index);
             if (args != null) {
                 coll.addElement(new City(args));
-                io.writeln("Команда update выполнена. Значение элемента коллекции с id " + Integer.parseInt(option) + " обновлено");
+                io.writeln("Команда update выполнена. Значение элемента коллекции с id " + Integer.parseInt(option) + " обновлено, введите команду \"show\", чтобы увидеть содержимое коллекции");
             } else {
                 File file = new File(filename);
                 if (file.canRead()) {
@@ -200,7 +200,7 @@ public class UpdateCommand implements Command {
                     }
                     args.add(nameGovernor);
                     coll.addElement(new City(args));
-                    io.writeln("Команда update выполнена. Значение элемента коллекции с id " + Integer.parseInt(option) + " обновлено");
+                    io.writeln("Команда update выполнена. Значение элемента коллекции с id " + Integer.parseInt(option) + " обновлено, введите команду \"show\", чтобы увидеть содержимое коллекции");
                 }
                 else{
                     io.writeln("Команда update не выполнена. Измените права на чтение файла");
