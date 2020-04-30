@@ -6,33 +6,27 @@ import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
-public class IOClient implements IOInterface {
+/**
+ * Класс, работающтй с каналом ввода/вывода
+ */
+public class IOClient implements IOInterfaceChannel {
     SocketChannel socketChannel;
     public IOClient(SocketChannel socketChannel){
         this.socketChannel=socketChannel;
     }
-
+    /**
+     * Функция записи строки в в буфер
+     * @param str-строка
+     */
     @Override
     public void writeln(String str) throws IOException {
         ByteBuffer byteBuffer=ByteBuffer.wrap((str+"\n").getBytes());
         socketChannel.write(byteBuffer);
     }
-
-    @Override
-    public String readLine() throws IOException {
-        return null;
-    }
-
-    @Override
-    public boolean hasNextLine() throws IOException {
-        return false;
-    }
-
-    @Override
-    public boolean ready() throws IOException {
-        return false;
-    }
-
+    /**
+     * Функция записи сериализованного объекта в канал
+     * @param obj-заданный объект
+     */
     @Override
     public void writeObj(Object obj) throws IOException {
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
@@ -41,7 +35,10 @@ public class IOClient implements IOInterface {
         oos.flush();
         socketChannel.write(ByteBuffer.wrap(baos.toByteArray()));
     }
-
+    /**
+     * Функция чтения сериализованного объекта
+     * @return  получение сериализованного объекта и его десериализация
+     */
     @Override
     public Object readObj() throws IOException, ClassNotFoundException {
         ByteBuffer byteBuffer=ByteBuffer.allocate(5*1024);
@@ -54,9 +51,11 @@ public class IOClient implements IOInterface {
             throw new ConnectException("Соединение с клиентом разорвано :(");
         }
     }
-
+    /**
+     * Функция закрытия канала
+     */
     @Override
     public void close() throws IOException {
-
+        socketChannel.close();
     }
 }

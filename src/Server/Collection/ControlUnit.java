@@ -1,7 +1,8 @@
 package Server.Collection;
 
 import Server.Commands.Command;
-import Server.IOInterface;
+import Server.*;
+import Server.IOInterfaceChannel;
 
 import java.io.IOException;
 import java.util.*;
@@ -31,14 +32,13 @@ public class ControlUnit {
     /**
      * Функция выполнения команды
      * @param option- параметр команды
-     * @param filename- имя файла с командами
      * @param args -список аргументов
      */
 
-    public void executeCommand(String key, String option, List<String> args, String filename, IOInterface io) throws IOException {
+    public void executeCommand(String key, String option, List<String> args, IOInterfaceChannel io) throws IOException {
         try {
             lastCommands.remove(numberCommand);
-            Commands.get(key).execute(option, filename, args,io);
+            Commands.get(key).execute(option, args,io);
             lastCommands.add(numberCommand, key);
             numberCommand++;
             if (numberCommand == 8) {
@@ -46,7 +46,7 @@ public class ControlUnit {
             }
 
         } catch (IndexOutOfBoundsException e) {
-            Commands.get(key).execute(option, filename, args,io);
+            Commands.get(key).execute(option, args,io);
             lastCommands.add(numberCommand, key);
             numberCommand++;
             if (numberCommand == 8) {

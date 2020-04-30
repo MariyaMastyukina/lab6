@@ -2,7 +2,9 @@ package Server.Commands;
 
 import Server.Commands.Command;
 import Server.Collection.*;
-import Server.IOInterface;
+import Server.*;
+import Server.IOInterfaceChannel;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -16,13 +18,14 @@ public class ExitCommand implements Command {
     /**
      * Функция выполнения команды
      * @param option- параметр команды
-     * @param filename- имя файла с командами
      * @param args -список аргументов
      */
     @Override
-    public void execute(String option, String filename, List<String> args, IOInterface io) throws IOException {
+    public void execute(String option, List<String> args, IOInterfaceChannel io) throws IOException {
         io.writeln( coll.saveCollection(new File("Collection.json")));
         io.writeln("Команда exit выполняется. Завершение работы программы");
+        io.writeln("exit");
+        io.close();
         System.exit(0);
     }
 }

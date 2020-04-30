@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.*;
 /**
- * @author Мастюкина Мария
  * Класс для соединения клиента с сервером
  */
 public class ServerConnection {

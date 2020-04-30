@@ -30,7 +30,7 @@ public class City implements Serializable {
     private Government government; //Поле может быть null
     /** Поле губернатор*/
     private Human governor; //Поле может быть null
-    /** Список аргументов класса Server.Server.Commands.AddCommand.City */
+    /** Список аргументов класса City */
     List<String> args;
     /**
      * Конструктор - создание нового объекта с определенными значениями
@@ -89,7 +89,7 @@ public class City implements Serializable {
      */
     @Override
     public String toString() {
-        return "Server.Server.Commands.AddCommand.City:id=" + this.id + ", name='" + this.name + '\'' + ", coordinates=" + this.coordinates + ", creationDate=" + this.creationDate + ", area=" + this.area +" , population="+this.population+ ", metersAboveSeaLevel=" + this.metersAboveSeaLevel + ", capital=" + this.capital + ", government=" + this.government + ", governor=" + this.governor + ", climate=" + this.climate;
+        return "City:id=" + this.id + ", name='" + this.name + '\'' + ", coordinates=" + this.coordinates + ", creationDate=" + this.creationDate + ", area=" + this.area +" , population="+this.population+ ", metersAboveSeaLevel=" + this.metersAboveSeaLevel + ", capital=" + this.capital + ", government=" + this.government + ", governor=" + this.governor + ", climate=" + this.climate;
     }
     /**
      * Функция получения значения поля {@link City#population}
@@ -98,6 +98,10 @@ public class City implements Serializable {
     public Integer getPopulation(){
         return population;
     }
+    /**
+     * Функция получения значения поля {@link City#name}
+     * @return имя города
+     */
     public String getNameCity(){
         return name;
     }

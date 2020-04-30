@@ -1,5 +1,6 @@
 package Server;
 
+import Server.Collection.CollectWorker;
 import Server.Collection.ControlUnit;
 
 import java.io.*;
@@ -16,9 +17,8 @@ public class Server {
     private static boolean checker;
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         ClientConnection clientConnection = null;
-        Launch launch=new Launch();
         CommandObject currentCommand = null;
-        IOInterface ioClient = null;
+        IOInterfaceChannel ioClient = null;
         try{
             clientConnection=new ClientConnection(4040);
         }
@@ -30,6 +30,7 @@ public class Server {
             System.out.println("Формат порта не верен");
             System.exit(0);
         }
+        Launch launch=new Launch();
         MapFromServer map=new MapFromServer(launch.getCommands());
         while(true){
             clientConnection.getSelector().select();
@@ -53,6 +54,18 @@ public class Server {
                             ioClient=new IOClient((SocketChannel) selectionKey.channel());
                             System.out.println("map отправлен клиенту");
                             ioClient.writeObj(map);
+                            try {
+                                File file = new File("Collection.json");
+                                if (file.canRead()) {
+                                    CollectWorker collection = new CollectWorker();
+                                    collection.fromFileToColl(file);
+                                    ioClient.writeln("Содержимое файла Collection.json записано в коллекцию");
+                                } else {
+                                    ioClient.writeln("Чтение содержимого коллекции из файла Collection.json невозможно, коллекция пуста. Поменяйте права на данный файл");
+                                }
+                            } catch (FileNotFoundException e) {
+                                ioClient.writeln("Collection.json файла не существует, загрузка коллекции невозможно, коллекция пуста");
+                            }
                             checker=true;
                         }
                         else{

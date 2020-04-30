@@ -5,16 +5,30 @@ import Server.Collection.*;
 import Server.IOInterface;
 import Server.MapFromServer;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.Serializable;
 import java.util.*;
-
+/**
+ * Класс-обертка для команды
+ */
 public class CommandObject implements Serializable {
+    /** Поле имя команды*/
     private String nameCommand;
+    /** Поле аргумент команды*/
     private String option;
+    /** Поле валидности введенной команды*/
     private Boolean checker=false;
+    /** Поле список аргументов для команд add и update*/
     private List<String> args = new ArrayList<>();
-
-    public CommandObject(String line, MapFromServer map) {
+    private transient Scanner scanner=new Scanner(System.in);
+    /**
+     * Конструктор - создания команды и проверка валидности ее ввода
+     * @param line -строка с консоли
+     * @param map -список команд
+     * @param filename -имя файла execute_script
+     */
+    public CommandObject(String line, MapFromServer map,String filename) {
         if (!line.trim().equals("")) {
             if (line.contains(" ")) {
                 String[] lineParts = line.split(" ", 2);
@@ -33,15 +47,17 @@ public class CommandObject implements Serializable {
                 }
             }
         }
-        if (nameCommand!=null){
+        if (nameCommand!=null && (filename==null)){
                 if (nameCommand.equals("add") || nameCommand.equals("update")) {
                     setListArgs();
                 }
         }
 
     }
-    private transient Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Функция создания списка аргументов для команд add и update
+     */
     private void setListArgs() {
         System.out.println("Введите название города. Пример: Москва");
         args.add(scanner.nextLine());
@@ -189,18 +205,37 @@ public class CommandObject implements Serializable {
         }
         args.add(nameGovernor);
     }
-
+    /**
+     * Функция заполнения списка аргументов для команд add и update существующим
+     */
+    public void setArgs(List<String> args){
+        this.args=args;
+    }
+    /**
+     * Функция получения значения поля {@link CommandObject#nameCommand}
+     * @return  имя команды
+     */
     public String getNameCommand() {
         return nameCommand;
     }
-
+    /**
+     * Функция получения значения поля {@link CommandObject#args}
+     * @return  список аргументов для команд add и update
+     */
     public List<String> getArgs() {
         return args;
     }
-
+    /**
+     * Функция получения значения поля {@link CommandObject#option}
+     * @return  аргумент команды
+     */
     public String getOption() {
         return option;
     }
+    /**
+     * Функция получения значения поля {@link CommandObject#checker}
+     * @return  валидность команды
+     */
     public Boolean getChecker(){
         return checker;
     }

@@ -5,7 +5,9 @@ import Server.Commands.Command;
 import java.io.IOException;
 import java.util.List;
 import Server.Collection.*;
-import Server.IOInterface;
+import Server.*;
+import Server.IOInterfaceChannel;
+
 /**
  * Класс команды help-список команд
  */
@@ -20,11 +22,10 @@ public class HelpCommand implements Command {
     /**
      * Функция выполнения команды
      * @param option- параметр команды
-     * @param filename- имя файла с командами
      * @param args -список аргументов
      */
     @Override
-    public void execute(String option, String filename, List<String> args, IOInterface io) throws IOException {
+    public void execute(String option, List<String> args, IOInterfaceChannel io) throws IOException {
         io.writeln("help:вывести справку по доступным командам\n" +
                 "info:вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)\n" +
                 "show:вывести в стандартный поток вывода все элементы коллекции в строковом представлении\n" +

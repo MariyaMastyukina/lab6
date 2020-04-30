@@ -3,7 +3,7 @@ package Server.Collection;
 import java.util.Comparator;
 
 /**
- * Класс сравнение объектов класса Server.Server.Commands.AddCommand.City, реализующий интерфейс Comparator
+ * Класс сравнение объектов класса Server.Server.Commands.AddCommand.City по населению, реализующий интерфейс Comparator
  */
 public class CityComparator implements Comparator<City> {
     /**

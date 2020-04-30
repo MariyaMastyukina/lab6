@@ -63,9 +63,13 @@ public class CollectWorker {
             return "Команда remove_all_by_meters_above_sea_level не выполнена. В коллекции нет элементов, значение поля metersAboveSeaLevel которых эквивалентно "+meters_above_sea_level;
         }
         else {
-            IdDelete.forEach(id -> removeElement(getElementById(id)));
-            return "Команда remove_all_by_meters_above_sea_level выполнена. Удалены из коллекции все элементы, значение поля metersAboveSeaLevel которых эквивалентно "+meters_above_sea_level;
-        }
+            try {
+                IdDelete.forEach(id -> removeElement(Integer.parseInt(getElementById(id))));
+                return "Команда remove_all_by_meters_above_sea_level выполнена. Удалены из коллекции все элементы, значение поля metersAboveSeaLevel которых эквивалентно " + meters_above_sea_level;
+            }
+            catch (NumberFormatException e){
+                return "Элемента с таким id нет. Введите команду \"show\", чтобы увидеть элементы коллекции и их id.";
+            }        }
         }//for remove_all_by_meters_above_sea_level,remove_by_id
     /**
      * Функция группировки коллекции по полю population
@@ -120,10 +124,11 @@ public class CollectWorker {
      * @param id- id элемента
      * @return индекс элемента
      */
-    public int getElementById(long id){
-        StringBuilder stringBuilder=new StringBuilder();
-       collection.forEach(city -> {if(city.getIdOfCity()==id) stringBuilder.append(collection.indexOf(city));});
-        return Integer.parseInt(stringBuilder.toString());
+    public String getElementById(long id){
+            StringBuilder stringBuilder=new StringBuilder();
+            collection.forEach(city -> {if(city.getIdOfCity()==id) stringBuilder.append(collection.indexOf(city));});
+            return stringBuilder.toString();
+
     }//for remove_by_id,update
     /**
      * Функция получения всех элементов коллекции
@@ -160,6 +165,9 @@ public class CollectWorker {
     public void sortRise() {
         Collections.sort(collection, new CityComparator());
     }//for print_ascending,sort
+    /**
+     * Функция сортировки коллекции по полю name
+     */
     public void sortByName(){
         Collections.sort(collection,new NameComparator());
     }

@@ -2,7 +2,7 @@ package Server.Commands;
 
 import Server.Commands.Command;
 import Server.Collection.*;
-import Server.IOInterface;
+import Server.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -24,17 +24,19 @@ public class RemoveByIdCommand implements Command {
     /**
      * Функция выполнения команды
      * @param option- параметр команды
-     * @param filename- имя файла с командами
      * @param args -список аргументов
      */
     @Override
-    public void execute(String option, String filename, List<String> args, IOInterface io) throws NullPointerException, IOException {
+    public void execute(String option, List<String> args, IOInterfaceChannel io) throws NullPointerException, IOException {
         try {
-            coll.removeElement(coll.getElementById(Integer.parseInt(option)));
+            coll.removeElement(Integer.parseInt(coll.getElementById(Integer.parseInt(option))));
             io.writeln("Команда remove_by_id выполнена. Элемент из коллекции с id " + Integer.parseInt(option) + " удален");
         }
         catch(IndexOutOfBoundsException | IOException e){
             io.writeln("Команда remove_by_id не выполнена. Элемента с таким id нет. Посмотреть элементы и их id можно, введя команду \"show\"");
+        }
+        catch (NumberFormatException e){
+            io.writeln("Элемента с таким id нет. Введите команду \"show\", чтобы увидеть элементы коллекции и их id.");
         }
     }
 }

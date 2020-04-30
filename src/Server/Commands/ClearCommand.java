@@ -3,7 +3,9 @@ package Server.Commands;
 import java.io.IOException;
 import java.util.List;
 import Server.Collection.*;
-import Server.IOInterface;
+import Server.*;
+import Server.IOInterfaceChannel;
+
 /**
  * Класс команды clear-очистка коллекции
  */
@@ -21,11 +23,10 @@ public class ClearCommand implements Command {
     /**
      * Функция выполнения команды
      * @param option- параметр команды
-     * @param filename- имя файла с командами
      * @param args -список аргументов
      */
     @Override
-    public void execute(String option, String filename, List<String> args, IOInterface io) throws IOException {
+    public void execute(String option, List<String> args, IOInterfaceChannel io) throws IOException {
         if (coll.getSizeColl()==0){
             io.writeln("Команда clear не выполнена. Коллекция не содержит элементов, очищение невозможно");
         }

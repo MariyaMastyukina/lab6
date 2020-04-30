@@ -1,11 +1,13 @@
 package Client;
 
-import Client.IOInterface;
+import Client.*;
 
 import java.io.IOException;
 import java.io.*;
-
-public class IOTerminal implements IOInterface {
+/**
+ * Класс, работающий с потоками ввода/вывода
+ */
+public class IOTerminal implements IOInterfaceStream {
     private Writer writer;
     private transient InputStream in;
     private transient OutputStream out;
@@ -16,29 +18,36 @@ public class IOTerminal implements IOInterface {
         writer=new OutputStreamWriter(out);
         bufferedReader = new BufferedReader(new InputStreamReader(in));
     }
-
+    /**
+     * Функция записи строки в заданный поток
+     * @param str-строка
+     */
     @Override
     public void writeln(String str) throws IOException {
         writer.write(str+"\n");
         writer.flush();
     }
-
+    /**
+     * Функция считывания строки в буфер ввода
+     * @return считанную строку
+     */
     @Override
     public String readLine() throws IOException {
         return bufferedReader.readLine();
     }
 
-    @Override
-    public boolean hasNextLine() throws IOException {
-        return bufferedReader.ready();
-    }
-
-
+    /**
+     * Функция проверки готовности ввода с потока
+     * @return готовность ввода с потока
+     */
     @Override
     public boolean ready() throws IOException {
         return bufferedReader.ready();
     }
-
+    /**
+     * Функция записи сериализованного объекта в поток
+     * @param obj-заданный объект
+     */
     @Override
     public void writeObj(Object obj) throws IOException {
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
@@ -50,16 +59,22 @@ public class IOTerminal implements IOInterface {
         bos.flush();
         oos.flush();
     }
-
+    /**
+     * Функция чтения сериализованного объекта с потока
+     * @return  получение сериализованного объекта и его десериализация
+     */
     @Override
     public Object readObj() throws IOException, ClassNotFoundException {
         //счиытваем сериализованный объект, десериализуем
         ObjectInputStream ois=new ObjectInputStream(in);
         return ois.readObject();
     }
-
+    /**
+     * Функция закрытия потока ввода/вывода
+     */
     @Override
     public void close() throws IOException {
         out.close();
+        in.close();
     }
 }
