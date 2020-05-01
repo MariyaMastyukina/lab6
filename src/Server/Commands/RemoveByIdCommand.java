@@ -5,6 +5,8 @@ import Server.Collection.*;
 import Server.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Класс команды remove_by_id-Удаление элементов по id
@@ -12,6 +14,7 @@ import java.util.List;
 
 public class RemoveByIdCommand implements Command {
     CollectWorker coll;
+    static Logger LOGGER;
     /**
      * Конструктор - создание нового объекта с определенными значениями
      * @param p- переменная для управления командами
@@ -20,6 +23,7 @@ public class RemoveByIdCommand implements Command {
     public RemoveByIdCommand(ControlUnit p, CollectWorker collection){
         p.addCommand("remove_by_id",this);
         this.coll=collection;
+        LOGGER=Logger.getLogger(RemoveByIdCommand.class.getName());
     }
     /**
      * Функция выполнения команды
@@ -29,13 +33,12 @@ public class RemoveByIdCommand implements Command {
     @Override
     public void execute(String option, List<String> args, IOInterfaceChannel io) throws NullPointerException, IOException {
         try {
+            LOGGER.log(Level.INFO,"Отправка результата выполнения команды на сервер");
             coll.removeElement(Integer.parseInt(coll.getElementById(Integer.parseInt(option))));
             io.writeln("Команда remove_by_id выполнена. Элемент из коллекции с id " + Integer.parseInt(option) + " удален");
         }
-        catch(IndexOutOfBoundsException | IOException e){
-            io.writeln("Команда remove_by_id не выполнена. Элемента с таким id нет. Посмотреть элементы и их id можно, введя команду \"show\"");
-        }
         catch (NumberFormatException e){
+            LOGGER.log(Level.WARNING,"В коллекцции нет элемента с таким id",e);
             io.writeln("Элемента с таким id нет. Введите команду \"show\", чтобы увидеть элементы коллекции и их id.");
         }
     }

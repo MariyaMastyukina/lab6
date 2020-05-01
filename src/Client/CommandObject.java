@@ -2,7 +2,7 @@ package Client;
 
 import Server.Collection.Government;
 import Server.Collection.*;
-import Server.IOInterface;
+import Server.*;
 import Server.MapFromServer;
 
 import java.io.File;

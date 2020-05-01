@@ -2,6 +2,9 @@ package Server.Commands;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import Server.Collection.*;
 import Server.*;
 import Server.IOInterfaceChannel;
@@ -11,6 +14,7 @@ import Server.IOInterfaceChannel;
  */
 public class ClearCommand implements Command {
     CollectWorker coll;
+    static Logger LOGGER;
     /**
      * Конструктор - создание нового объекта с определенными значениями
      * @param p- переменная для управления командами
@@ -19,6 +23,7 @@ public class ClearCommand implements Command {
     public ClearCommand(ControlUnit p, CollectWorker collection){
         p.addCommand("clear",this);
         this.coll=collection;
+        LOGGER=Logger.getLogger(ClearCommand.class.getName());
     }
     /**
      * Функция выполнения команды
@@ -27,6 +32,7 @@ public class ClearCommand implements Command {
      */
     @Override
     public void execute(String option, List<String> args, IOInterfaceChannel io) throws IOException {
+        LOGGER.log(Level.INFO,"Отправка результата выполнения команды на сервер");
         if (coll.getSizeColl()==0){
             io.writeln("Команда clear не выполнена. Коллекция не содержит элементов, очищение невозможно");
         }

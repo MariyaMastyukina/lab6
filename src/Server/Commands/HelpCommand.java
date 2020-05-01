@@ -4,6 +4,9 @@ import Server.Commands.Command;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import Server.Collection.*;
 import Server.*;
 import Server.IOInterfaceChannel;
@@ -12,12 +15,14 @@ import Server.IOInterfaceChannel;
  * Класс команды help-список команд
  */
 public class HelpCommand implements Command {
+    static Logger LOGGER;
     /**
      * Конструктор - создание нового объекта с определенными значениями
      * @param p- переменная для управления командами
      */
     public HelpCommand(ControlUnit p){
         p.addCommand("help",this);
+        LOGGER=Logger.getLogger(HelpCommand.class.getName());
     }
     /**
      * Функция выполнения команды
@@ -26,6 +31,7 @@ public class HelpCommand implements Command {
      */
     @Override
     public void execute(String option, List<String> args, IOInterfaceChannel io) throws IOException {
+        LOGGER.log(Level.INFO,"Отправка результата выполнения команды на сервер");
         io.writeln("help:вывести справку по доступным командам\n" +
                 "info:вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)\n" +
                 "show:вывести в стандартный поток вывода все элементы коллекции в строковом представлении\n" +

@@ -8,6 +8,9 @@ import java.net.ConnectException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import Client.*;
 /**
  * @author Мастюкина Мария
@@ -15,18 +18,23 @@ import Client.*;
  */
 public class Server {
     private static boolean checker;
+    static Logger LOGGER;
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         ClientConnection clientConnection = null;
         CommandObject currentCommand = null;
         IOInterfaceChannel ioClient = null;
+        LOGGER=Logger.getLogger(Server.class.getName());
         try{
+            LOGGER.log(Level.INFO,"Подключение к клиенту");
             clientConnection=new ClientConnection(4040);
         }
         catch(IndexOutOfBoundsException e){
+            LOGGER.log(Level.WARNING,"Ошибка в подключении к клиенту, не указан порт");
             System.out.println("Нужно указать порт");
             System.exit(0);
         }
         catch (NumberFormatException e){
+            LOGGER.log(Level.WARNING,"Ошибка в подключении к клиенту, формат порта указан неверно");
             System.out.println("Формат порта не верен");
             System.exit(0);
         }
@@ -36,53 +44,56 @@ public class Server {
             clientConnection.getSelector().select();
             Iterator iterator= clientConnection.getSelector().selectedKeys().iterator();
             while(iterator.hasNext()){
+                LOGGER.log(Level.INFO,"Получение текущего селектора");
                 SelectionKey selectionKey=(SelectionKey) iterator.next();
-                System.out.println("текущий селектор" +selectionKey);
                 iterator.remove();
                 try{
+                    LOGGER.log(Level.INFO,"Проверка ключа селектора");
                     if (!selectionKey.isValid()){
                         continue;
                     }
                     if (selectionKey.isAcceptable()){
+                        LOGGER.log(Level.INFO,"Разрешение подключение клиента к севреру");
                         clientConnection.acceptConnection();
-                        System.out.println("подключение завершено");
                         checker=false;
                     }
                     if (selectionKey.isWritable()){
                         if (!checker){
-                            System.out.println("создан ioClient для map");
                             ioClient=new IOClient((SocketChannel) selectionKey.channel());
-                            System.out.println("map отправлен клиенту");
+                            LOGGER.log(Level.INFO,"Отправка списка команд серверу");
                             ioClient.writeObj(map);
                             try {
+                                LOGGER.log(Level.INFO,"Загрузка содержимого файла Collection.json в коллекцию ");
                                 File file = new File("Collection.json");
                                 if (file.canRead()) {
                                     CollectWorker collection = new CollectWorker();
                                     collection.fromFileToColl(file);
                                     ioClient.writeln("Содержимое файла Collection.json записано в коллекцию");
                                 } else {
+                                    LOGGER.log(Level.INFO,"Ошибка в правах файла");
                                     ioClient.writeln("Чтение содержимого коллекции из файла Collection.json невозможно, коллекция пуста. Поменяйте права на данный файл");
                                 }
                             } catch (FileNotFoundException e) {
+                                LOGGER.log(Level.WARNING,"Файл не существует");
                                 ioClient.writeln("Collection.json файла не существует, загрузка коллекции невозможно, коллекция пуста");
                             }
                             checker=true;
                         }
                         else{
+                            LOGGER.log(Level.INFO,"Запуск полученный от клиента команды");
                             launch.beginProgramm(currentCommand,ioClient);
                         }
                         selectionKey.interestOps(SelectionKey.OP_READ);
                     }
                     if (selectionKey.isReadable()){
-                        System.out.println("Начинаем считывать команду");
+                        LOGGER.log(Level.INFO,"Чтение полученной от клиента команды");
                         ioClient= new IOClient((SocketChannel) selectionKey.channel());
-                        System.out.println("Создан ioClient");
                         currentCommand=(CommandObject) ioClient.readObj();
-                        System.out.println("Получена команда "+currentCommand.getNameCommand());
                         selectionKey.interestOps(SelectionKey.OP_WRITE);
                     }
                 }
                 catch(ConnectException e){
+                    LOGGER.log(Level.WARNING,"Ошибка в соединении с клиентом",e);
                     System.out.println(e.getMessage());
                     checker=false;
                 }

@@ -9,12 +9,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Класс команды update-обновление элемента по id
  */
 public class UpdateCommand implements Command {
     CollectWorker coll;
-
+static Logger LOGGER;
     /**
      * Конструктор - создание нового объекта с определенными значениями
      *
@@ -35,14 +38,14 @@ public class UpdateCommand implements Command {
     @Override
     public void execute(String option, List<String> args, IOInterfaceChannel io) throws IOException {
         try {
+            LOGGER.log(Level.INFO,"Отправка результата выполнения команды на сервер");
             int index = Integer.parseInt(coll.getElementById(Integer.parseInt(option)));
             coll.removeElement(index);
                 coll.addElementWithId(new City(args),index);
                 io.writeln("Команда update выполнена. Значение элемента коллекции с id " + Integer.parseInt(option) + " обновлено, введите команду \"show\", чтобы увидеть содержимое коллекции");
         }
-        catch (IOException e) {
-            e.printStackTrace();
-        } catch (NumberFormatException e) {
+        catch (NumberFormatException e) {
+            LOGGER.log(Level.WARNING,"В коллекции элемента с таким id нет",e);
             io.writeln("Элемента с таким id нет. Введите команду \"show\", чтобы увидеть элементы коллекции и их id.");
 
         }
