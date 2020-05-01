@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Класс типа enum, содержащий тип климата города
  */
 
-public enum Climate implements Serializable {
+public enum Climate {
     /**
      * Влажный континентальный климат
      */

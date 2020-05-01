@@ -21,6 +21,7 @@ public class Validation {
      */
     public Validation(String command,String option, MapFromServer commands){
         this.list=commands.getMap();
+        list.add("execute_script");
         this.command=command;
         this.option=option;
     }

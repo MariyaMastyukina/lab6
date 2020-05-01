@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Класс типа enum, содержащий тип правительства города
  */
 
-public enum Government implements Serializable {
+public enum Government {
     /**
      * Корпоратократия
      */

@@ -26,7 +26,7 @@ public class Server {
         LOGGER=Logger.getLogger(Server.class.getName());
         try{
             LOGGER.log(Level.INFO,"Подключение к клиенту");
-            clientConnection=new ClientConnection(4040);
+            clientConnection=new ClientConnection(Integer.parseInt(args[0]));
         }
         catch(IndexOutOfBoundsException e){
             LOGGER.log(Level.WARNING,"Ошибка в подключении к клиенту, не указан порт");

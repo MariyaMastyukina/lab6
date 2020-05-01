@@ -7,7 +7,7 @@ import java.util.List;
  * Класс координат со свойствами x y.
  */
 
-public class Coordinates  implements Serializable {
+public class Coordinates {
     /** Поле координата X*/
     private float x; //Значение поля должно быть больше -375
     /** Поле координата Y*/

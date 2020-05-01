@@ -1,13 +1,3 @@
 show
-update 0
-ffff
-90
-90
-90
-90
-90
-true
-tundra
-oligarchy
-fhid
+info
 execute_script commands.txt

@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Класс города со свойствами id, name, coordiantes, creationDate, area, population, metersAboveSeaLevel, capital, climate, government, governor.
  */
-public class City implements Serializable {
+public class City  {
     /** Поле id*/
     private long id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     /** Поле название*/

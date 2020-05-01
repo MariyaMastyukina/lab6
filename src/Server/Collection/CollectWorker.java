@@ -64,7 +64,7 @@ public class CollectWorker {
         }
         else {
             try {
-                IdDelete.forEach(id -> removeElement(Integer.parseInt(getElementById(id))));
+                IdDelete.forEach(id -> removeElement(getElementById(id)));
                 return "Команда remove_all_by_meters_above_sea_level выполнена. Удалены из коллекции все элементы, значение поля metersAboveSeaLevel которых эквивалентно " + meters_above_sea_level;
             }
             catch (NumberFormatException e){
@@ -124,11 +124,14 @@ public class CollectWorker {
      * @param id- id элемента
      * @return индекс элемента
      */
-    public String getElementById(long id){
-            StringBuilder stringBuilder=new StringBuilder();
-            collection.forEach(city -> {if(city.getIdOfCity()==id) stringBuilder.append(collection.indexOf(city));});
-            return stringBuilder.toString();
-
+    public int getElementById(long id){
+        City city=null;
+    for (City c:collection){
+                if (c.getIdOfCity()==id){
+                    city=c;
+                }
+            }
+    return collection.indexOf(city);
     }//for remove_by_id,update
     /**
      * Функция получения всех элементов коллекции

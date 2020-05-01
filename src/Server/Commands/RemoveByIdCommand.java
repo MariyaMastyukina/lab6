@@ -33,12 +33,16 @@ public class RemoveByIdCommand implements Command {
     @Override
     public void execute(String option, List<String> args, IOInterfaceChannel io) throws NullPointerException, IOException {
         try {
-            LOGGER.log(Level.INFO,"Отправка результата выполнения команды на сервер");
-            coll.removeElement(Integer.parseInt(coll.getElementById(Integer.parseInt(option))));
-            io.writeln("Команда remove_by_id выполнена. Элемент из коллекции с id " + Integer.parseInt(option) + " удален");
-        }
-        catch (NumberFormatException e){
-            LOGGER.log(Level.WARNING,"В коллекцции нет элемента с таким id",e);
+            if (coll.getSizeColl()!=0) {
+                LOGGER.log(Level.INFO, "Отправка результата выполнения команды на сервер");
+                coll.removeElement(coll.getElementById(Integer.parseInt(option)));
+                io.writeln("Команда remove_by_id выполнена. Элемент из коллекции с id " + Integer.parseInt(option) + " удален");
+            }
+            else{
+                io.writeln("Команда remove_by_id не выполнена. Коллекция пуста");
+            }
+            }
+        catch (IndexOutOfBoundsException e){
             io.writeln("Элемента с таким id нет. Введите команду \"show\", чтобы увидеть элементы коллекции и их id.");
         }
     }

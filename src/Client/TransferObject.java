@@ -230,9 +230,10 @@ public class TransferObject {
             }
         }
         else{
-            LOGGER.log(Level.INFO,"Отправляем команду на сервер");
-            ioServer.writeObj(command);
-        }
+            if (command.getChecker()) {
+                LOGGER.log(Level.INFO, "Отправляем команду на сервер");
+                ioServer.writeObj(command);
+
         long startTime=System.currentTimeMillis();
         LOGGER.log(Level.INFO,"Ждем готовности сервера");
         while (!ioServer.ready()){
@@ -254,6 +255,8 @@ public class TransferObject {
             }
             LOGGER.log(Level.INFO,"Выводим ответ сервера на консоль");
             ioClient.writeln(answer);
+        }
+            }
         }
     }
 }
