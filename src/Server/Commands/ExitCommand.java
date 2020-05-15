@@ -14,8 +14,10 @@ import java.util.logging.Logger;
 public class ExitCommand implements Command {
     CollectWorker coll;
     static Logger LOGGER;
+    ControlUnit p;
     public ExitCommand(ControlUnit p, CollectWorker collection) {
         this.coll=collection;
+        this.p=p;
         p.addCommand("exit",this);
         LOGGER=Logger.getLogger(ClearCommand.class.getName());
     }
@@ -28,10 +30,9 @@ public class ExitCommand implements Command {
     public void execute(String option, List<String> args, IOInterfaceChannel io) throws IOException {
         LOGGER.log(Level.INFO,"Отправка результата выполнения команды на сервер");
         io.writeln( coll.saveCollection(new File("Collection.json")));
+        coll.clearList();
+        p.clearListCommand();
         io.writeln("Команда exit выполняется. Завершение работы программы");
         io.writeln("exit");
-        io.close();
-        LOGGER.log(Level.INFO,"Завершение работы приложения");
-        System.exit(0);
     }
 }

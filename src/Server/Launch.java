@@ -10,6 +10,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import Server.Collection.*;
 import Server.*;
 /**
@@ -18,7 +21,6 @@ import Server.*;
 public class Launch {
     private ControlUnit pusk = new ControlUnit();
     private CollectWorker collection = new CollectWorker();
-
     /**
      * Конструктор создания команд
      */
@@ -37,6 +39,7 @@ public class Launch {
         Command print_ascending = new PrintAscendingCommand(pusk, collection);
         Command add = new AddCommand(pusk, collection);
         Command update = new UpdateCommand(pusk, collection);
+        Command save=new SaveCommand(collection);
     }
 
     /**

@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Класс человека со свойством name.
  */
 
-public class Human {
+public class Human implements Serializable{
     /** Поле имя человека*/
     private String name; //Поле не может быть null, Строка не может быть пустой
     /**

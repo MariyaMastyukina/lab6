@@ -17,11 +17,15 @@ public class ClientConnection {
      * Конструктор соединения с клиентом
      * @param PORT-порт
      */
-    public ClientConnection(Integer PORT) throws IOException {
+    public void connect(Integer PORT) throws IOException {
+        //создаем канал сервер сокета
         ssc=ServerSocketChannel.open();
         ssc.configureBlocking(false);
+        //создаем адрес сокета и связываем его
         ssc.socket().bind(new InetSocketAddress(PORT));
+        //создаем селектор
         selector=Selector.open();
+        //регистрируем
         ssc.register(selector,SelectionKey.OP_ACCEPT);
     }
     /**
@@ -34,8 +38,10 @@ public class ClientConnection {
     /**
      * Функция подтверждения соединения с клиентом
      */
-    public void acceptConnection() throws IOException {
-        channel=ssc.accept();
+    public void acceptConnection(SelectionKey key) throws IOException {
+        //принимаем соединение к сокету канала
+        ServerSocketChannel sschannel=(ServerSocketChannel)key.channel();
+        channel=sschannel.accept();
         channel.configureBlocking(false);
         channel.register(selector,SelectionKey.OP_WRITE);
     }
@@ -45,5 +51,8 @@ public class ClientConnection {
      */
     public SocketChannel getChannel(){
         return channel;
+    }
+    public void sscClose() throws IOException {
+        ssc.socket().close();
     }
 }

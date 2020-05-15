@@ -2,12 +2,13 @@ package Server.Collection;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Класс города со свойствами id, name, coordiantes, creationDate, area, population, metersAboveSeaLevel, capital, climate, government, governor.
  */
-public class City  {
+public class City implements Serializable {
     /** Поле id*/
     private long id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     /** Поле название*/
@@ -31,17 +32,15 @@ public class City  {
     /** Поле губернатор*/
     private Human governor; //Поле может быть null
     /** Список аргументов класса City */
-    List<String> args;
-    /**
+     /**
      * Конструктор - создание нового объекта с определенными значениями
      * @param args -список аргументов определенного объекта
      */
     public City(List<String> args) {
-        this.args=args;
         if (args.size()==10) {
             this.id = (long) (Math.random() * 1000.0D);
             this.name = args.get(0);
-            this.coordinates = new Coordinates(args.subList(1, 3));
+            this.coordinates = new Coordinates(new ArrayList<>(args.subList(1, 3)));
             this.creationDate = LocalDate.now();
             this.area = Double.parseDouble(args.get(3));
             this.population = Integer.parseInt(args.get(4));
@@ -56,7 +55,7 @@ public class City  {
         else if (args.size()==11){
             this.id=Long.parseLong(args.get(0));
             this.name = args.get(1);
-            this.coordinates = new Coordinates(args.subList(2, 4));
+            this.coordinates = new Coordinates(new ArrayList<>(args.subList(2, 4)));
             this.creationDate = LocalDate.now();
             this.area = Double.parseDouble(args.get(4));
             this.population = Integer.parseInt(args.get(5));

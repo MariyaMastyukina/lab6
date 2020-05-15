@@ -35,7 +35,6 @@ public class InfoCommand implements Command {
     @Override
     public void execute(String option, List<String> args, IOInterfaceChannel io) throws IOException {
         LOGGER.log(Level.INFO,"Отправка результата выполнения команды на сервер");
-
         io.writeln("Информация о коллекции (тип, дата инициализации, количество элементов):\n"+coll.getTypeColl()+"\n"+coll.getDataColl()+"\n"+coll.getSizeColl());
     }
 }

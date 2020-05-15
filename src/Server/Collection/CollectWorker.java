@@ -18,6 +18,7 @@ public class CollectWorker {
     }
     /** Связанная коллекция экземпляров класса Server.Server.Commands.AddCommand.City*/
     private static List<City> collection = new LinkedList<>();
+
     /**
      * Функция добавления элемента в коллекцию
      * @param city- объект класса Server.Server.Commands.AddCommand.City
@@ -70,7 +71,7 @@ public class CollectWorker {
             catch (NumberFormatException e){
                 return "Элемента с таким id нет. Введите команду \"show\", чтобы увидеть элементы коллекции и их id.";
             }        }
-        }//for remove_all_by_meters_above_sea_level,remove_by_id
+    }//for remove_all_by_meters_above_sea_level,remove_by_id
     /**
      * Функция группировки коллекции по полю population
      */
@@ -85,12 +86,12 @@ public class CollectWorker {
     public void fromFileToColl(File file) throws IOException {
         try {
             Gson gson = new Gson();
-                FileReader filereader = new FileReader(file);
-                Scanner scanFile = new Scanner(filereader);
-                while (scanFile.hasNextLine()) {
-                    collection.add(gson.fromJson(scanFile.nextLine(), City.class));
-                }
-                filereader.close();
+            FileReader filereader = new FileReader(file);
+            Scanner scanFile = new Scanner(filereader);
+            while (scanFile.hasNextLine()) {
+                collection.add(gson.fromJson(scanFile.nextLine(), City.class));
+            }
+            filereader.close();
         }
         catch(IOException e){
             System.out.println("Файл не существует, заполнение коллекции невозможно, поэтому коллекция пуста");
@@ -113,7 +114,7 @@ public class CollectWorker {
                 }
             } );
             filewriter.close();
-             return"Коллекция сохранена в файл";
+            return"Коллекция сохранена в файл"+file.getName();
         }
         else{
             return"Запись файла невозможна. Поменяйте права доступа";
@@ -126,20 +127,18 @@ public class CollectWorker {
      */
     public int getElementById(long id){
         City city=null;
-    for (City c:collection){
-                if (c.getIdOfCity()==id){
-                    city=c;
-                }
+        for (City c:collection){
+            if (c.getIdOfCity()==id){
+                city=c;
             }
-    return collection.indexOf(city);
+        }
+        return collection.indexOf(city);
     }//for remove_by_id,update
     /**
      * Функция получения всех элементов коллекции
      */
-    public String getAllElement() throws NullPointerException {
-        StringBuilder stringBuilder=new StringBuilder();
-        collection.forEach(city -> stringBuilder.append(city.toString()).append("\n"));
-        return stringBuilder.toString();
+    public void setCollection(LinkedList<City> newColl){
+        collection=newColl;
     }//show
     /**
      * Функция удаления определенного элемента
@@ -165,14 +164,18 @@ public class CollectWorker {
     /**
      * Функция сортировки коллекции по полю population
      */
-    public void sortRise() {
-        Collections.sort(collection, new CityComparator());
+    public LinkedList<City> sortRise() {
+//        Collections.sort(collection, new CityComparator());
+        LinkedList<City> newList=collection.stream().sorted(new CityComparator()).collect(Collectors.toCollection(LinkedList::new));
+        return newList;
     }//for print_ascending,sort
     /**
      * Функция сортировки коллекции по полю name
      */
-    public void sortByName(){
-        Collections.sort(collection,new NameComparator());
+    public LinkedList<City> sortByName(){
+//        Collections.sort(collection,new NameComparator());
+        LinkedList<City> newList=collection.stream().sorted(new NameComparator()).collect(Collectors.toCollection(LinkedList::new));
+        return newList;
     }
 
 }

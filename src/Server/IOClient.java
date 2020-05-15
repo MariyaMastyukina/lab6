@@ -1,5 +1,8 @@
 package Server;
 
+import Server.Collection.CollectWorker;
+import Server.Collection.ControlUnit;
+
 import java.io.*;
 import java.net.ConnectException;
 import java.nio.Buffer;
@@ -34,6 +37,7 @@ public class IOClient implements IOInterfaceChannel {
         oos.writeObject(obj);
         oos.flush();
         socketChannel.write(ByteBuffer.wrap(baos.toByteArray()));
+        //Обертываем байтовый массив в буфер.
     }
     /**
      * Функция чтения сериализованного объекта
@@ -41,6 +45,7 @@ public class IOClient implements IOInterfaceChannel {
      */
     @Override
     public Object readObj() throws IOException, ClassNotFoundException {
+        //Выделяем новый буфер байта
         ByteBuffer byteBuffer=ByteBuffer.allocate(5*1024);
         try{
             socketChannel.read(byteBuffer);
@@ -48,7 +53,10 @@ public class IOClient implements IOInterfaceChannel {
         }
         catch(IOException e){
             socketChannel.close();
+            new CollectWorker().clearList();
+            new ControlUnit().clearListCommand();
             throw new ConnectException("Соединение с клиентом разорвано :(");
+
         }
     }
     /**

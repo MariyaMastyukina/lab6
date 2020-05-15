@@ -6,6 +6,8 @@ import Server.IOInterfaceChannel;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Класс для хранения и запуска команд
@@ -37,21 +39,19 @@ public class ControlUnit {
 
     public void executeCommand(String key, String option, List<String> args, IOInterfaceChannel io) throws IOException {
         try {
-            lastCommands.remove(numberCommand);
+            if (numberCommand==8) {
+            numberCommand = 0;
+        }
             Commands.get(key).execute(option, args,io);
             lastCommands.add(numberCommand, key);
             numberCommand++;
-            if (numberCommand == 8) {
-                numberCommand = 0;
+            if(lastCommands.get(numberCommand)!=null){
+                lastCommands.remove(numberCommand);
             }
 
+
         } catch (IndexOutOfBoundsException e) {
-            Commands.get(key).execute(option, args,io);
-            lastCommands.add(numberCommand, key);
-            numberCommand++;
-            if (numberCommand == 8) {
-                numberCommand = 0;
-            }
+
         }
     }
 
@@ -67,5 +67,8 @@ public class ControlUnit {
             lastCommands.forEach(commands->stringBuilder.append(commands+"\n"));
             }
             return "Команда history выполнена.\n"+"Вывод последних восьми использованных команд:\n"+stringBuilder.toString();
+        }
+        public void clearListCommand(){
+        lastCommands.clear();
         }
     }

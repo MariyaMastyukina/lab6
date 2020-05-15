@@ -20,10 +20,10 @@ public class SortCommand implements Command {
      * @param collection- переменнаяи для работы с коллекцией
      */
     public SortCommand(ControlUnit p, CollectWorker collection){
-            p.addCommand("sort",this);
-            this.coll=collection;
-            LOGGER=Logger.getLogger(SortCommand.class.getName());
-        }
+        p.addCommand("sort",this);
+        this.coll=collection;
+        LOGGER=Logger.getLogger(SortCommand.class.getName());
+    }
     /**
      * Функция выполнения команды
      * @param option- параметр команды
@@ -33,7 +33,7 @@ public class SortCommand implements Command {
     public void execute(String option, List<String> args, IOInterfaceChannel io) throws IOException {
         LOGGER.log(Level.INFO,"Отправка результата выполнения команды на сервер");
         if(coll.getSizeColl()!=0){
-            coll.sortRise();
+            coll.setCollection(coll.sortRise());
             io.writeln("Команда sort выполнена. Коллекция отсортирована. Чтобы увидеть отсортированную коллекцию, введите команду \"print_ascending\"");
         }
         else{

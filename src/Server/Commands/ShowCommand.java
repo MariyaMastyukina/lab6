@@ -1,9 +1,11 @@
 package Server.Commands;
 
-import Server.Commands.Command;
+import Server.Collection.CityObjects;
 import Server.Collection.*;
 import Server.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,6 +14,7 @@ import java.util.logging.Logger;
  * Класс команды show-вывод элементов коллекции
  */
 public class ShowCommand implements Command {
+    private CityObjects send=new CityObjects();
     CollectWorker coll;
     static Logger LOGGER;
     /**
@@ -33,10 +36,21 @@ public class ShowCommand implements Command {
     public void execute(String option, List<String> args, IOInterfaceChannel io) throws IOException {
         LOGGER.log(Level.INFO,"Отправка результата выполнения команды на сервер");
         if (coll.getSizeColl()==0){
-                io.writeln("Команда show не выполнена. Коллекция пустая");}
-                        else{
-                            coll.sortByName();
-                io.writeln("Команда show выполнена. Список элементов коллекции:\n"+coll.getAllElement());
-            }
+            send.setMessage("Команда show не выполнена. Коллекция пустая");
+            send.setObject(null);
+            io.writeObj(send);}
+        else{
+            coll.sortByName();
+            send.setMessage("Команда show выполнена. Список элементов коллекции:\n");
+            coll.sortByName().forEach(city -> {
+                try {
+                    send.setObject(city);
+                    io.writeObj(send);
+                    send.setMessage("");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
     }
 }
