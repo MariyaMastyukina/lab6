@@ -1,4 +1,4 @@
-package Server.Collection;
+package Server.Data;
 
 import java.io.Serializable;
 import java.time.LocalDate;

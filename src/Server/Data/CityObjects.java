@@ -1,6 +1,4 @@
-package Server.Collection;
-
-import Server.Collection.City;
+package Server.Data;
 
 import java.io.Serializable;
 

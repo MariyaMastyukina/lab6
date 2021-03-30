@@ -1,10 +1,9 @@
-package Server.Collection;
+package Server.Comparators;
+
+import Server.Data.City;
 
 import java.util.Comparator;
-import java.util.function.Function;
-import java.util.function.ToDoubleFunction;
-import java.util.function.ToIntFunction;
-import java.util.function.ToLongFunction;
+
 /**
  * Класс сравнение объектов класса Server.Server.Commands.AddCommand.City по имени, реализующий интерфейс Comparator
  */

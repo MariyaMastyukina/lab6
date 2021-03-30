@@ -1,6 +1,7 @@
-package Server;
+package Server.Data;
 
 import Server.Commands.Command;
+import Server.Server;
 
 import java.io.Serializable;
 import java.util.*;

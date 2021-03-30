@@ -1,12 +1,9 @@
-package Client;
+package Client.DataUtils;
 
-import Server.Collection.Government;
-import Server.Collection.*;
-import Server.*;
-import Server.MapFromServer;
+import Server.Data.Government;
+import Server.Data.*;
+import Server.Data.MapFromServer;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.Serializable;
 import java.util.*;
 /**

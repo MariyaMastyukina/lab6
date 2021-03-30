@@ -1,6 +1,4 @@
-package Client;
-
-import Client.*;
+package Client.IOClient;
 
 import java.io.IOException;
 import java.io.*;

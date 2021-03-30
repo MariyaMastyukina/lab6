@@ -1,20 +1,12 @@
-package Server;
+package Server.Launch;
 
-import Server.Collection.CollectWorker;
-import Server.Collection.ControlUnit;
+import Client.DataUtils.CommandObject;
 import Server.Commands.*;
-import Server.Server;
-import Client.*;
+import Server.IOServer.IOInterfaceChannel;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import Server.Collection.*;
-import Server.*;
 /**
  * Класс, который обрабатывает ввод команд с консоли
  */

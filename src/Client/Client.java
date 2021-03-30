@@ -1,10 +1,10 @@
 package Client;
-import Server.Collection.CollectWorker;
-import Server.*;
-import Client.*;
-
+import Client.DataUtils.CommandObject;
+import Client.DataUtils.TransferObject;
+import Client.IOClient.IOInterfaceStream;
+import Client.IOClient.IOTerminal;
+import Server.Data.MapFromServer;
 import java.io.*;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

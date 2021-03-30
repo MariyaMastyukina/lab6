@@ -1,13 +1,10 @@
-package Server.Collection;
+package Server.Launch;
 
 import Server.Commands.Command;
-import Server.*;
-import Server.IOInterfaceChannel;
+import Server.IOServer.IOInterfaceChannel;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Класс для хранения и запуска команд

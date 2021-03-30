@@ -1,14 +1,12 @@
-package Client;
+package Client.DataUtils;
 
-import Server.Collection.City;
-import Server.Collection.CityObjects;
-import Server.Collection.Climate;
-import Server.Collection.Government;
-import Server.Commands.Command;
-import Server.MapFromServer;
-
+import Client.IOClient.IOInterfaceStream;
+import Server.Data.CityObjects;
+import Server.Data.Climate;
+import Server.Data.Government;
+import Server.Data.MapFromServer;
+import Client.*;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -24,7 +22,7 @@ public class TransferObject {
     private MapFromServer map;
     private IOInterfaceStream ioClient;
     private ServerConnection serverConnection;
-    public TransferObject(IOInterfaceStream ioServer, MapFromServer map,IOInterfaceStream ioClient,ServerConnection serverConnection){
+    public TransferObject(IOInterfaceStream ioServer, MapFromServer map, IOInterfaceStream ioClient, ServerConnection serverConnection){
         this.ioServer=ioServer;
         this.map=map;
         this.ioClient=ioClient;

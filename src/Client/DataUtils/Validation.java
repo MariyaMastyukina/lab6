@@ -1,9 +1,10 @@
 
-package Client;
+package Client.DataUtils;
 
 import java.util.List;
-import Server.*;
-import java.util.Map;
+
+import Client.Client;
+import Server.Data.MapFromServer;
 
 /**
  * Класс, проверяющий валидность вводимых команд

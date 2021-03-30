@@ -1,10 +1,12 @@
-package Client;
+package Client.IOClient;
+
+import Client.Client;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 /**
- * {@code Client.IOInterfaceStream} содержит команды потока ввода/вывода
+ * {@code Client.IOClient.IOInterfaceStream} содержит команды потока ввода/вывода
  */
 public interface IOInterfaceStream {
     /**
